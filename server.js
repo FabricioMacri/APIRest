@@ -21,10 +21,24 @@ app.use(express.json())
 app.use(cors())
 
 // routes -------------------------------------------
-app.get('/', (req, res)=>{
+app.get('/prueba', (req, res)=>{
     res.send('Welcome to my API')
 })
-app.use('/api', routes)
+app.use('/items', routes)
+//app.use('/search/categories', routes)
+app.get('/search/categories', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT category FROM `e-commerce`.products', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
+app.get('/api/:category', routes)
+
 
 // server running -----------------------------------
 app.listen(app.get('port'), ()=>{

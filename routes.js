@@ -14,5 +14,27 @@ routes.get('/', (req, res)=>{
         })
     })
 })
+/*routes.get('/search/categories', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT category FROM `e-commerce`.products', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})*/
+routes.get('/api/:category', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        
+        conn.query('SELECT * FROM `e-commerce`.products WHERE category = ?', [req.params.category], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
 
 module.exports = routes;
