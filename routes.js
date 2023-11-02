@@ -14,7 +14,7 @@ routes.get('/', (req, res)=>{
         })
     })
 })
-/*routes.get('/search/categories', (req, res)=>{
+/*routes.get('/categories', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
 
