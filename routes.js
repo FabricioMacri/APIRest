@@ -25,6 +25,17 @@ routes.get('/', (req, res)=>{
         })
     })
 })*/
+routes.get('/item/:id', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+        
+        conn.query('SELECT * FROM `e-commerce`.products WHERE ID = ?', [req.params.id], (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
 routes.get('/api/:category', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)

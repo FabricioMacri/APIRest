@@ -37,6 +37,7 @@ app.get('/search/categories', (req, res)=>{
         })
     })
 })
+app.get('/item/:id', routes)
 app.get('/api/:category', routes)
 
 
