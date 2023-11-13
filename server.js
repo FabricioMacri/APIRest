@@ -8,11 +8,11 @@ const routes = require("./routes");
 const app = express();
 app.set('port', process.env.PORT || 9000);
 const dbOptions = {
-    host : "DESKTOP-RN81BSJ",
+    host : "srv1073.hstgr.io",
     port : 3306,
-    user : "Admin",
+    user : "u284866064_admin",
     password : "Elmaster0192837465",
-    database : "e-commerce"
+    database : "u284866064_coopedatabase"
 }
 
 
