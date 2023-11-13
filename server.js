@@ -8,9 +8,9 @@ const routes = require("./routes");
 const app = express();
 app.set('port', process.env.PORT || 9000);
 const dbOptions = {
-    host : "localhost",
+    host : "DESKTOP-RN81BSJ",
     port : 3306,
-    user : "root",
+    user : "Admin",
     password : "Elmaster0192837465",
     database : "e-commerce"
 }
