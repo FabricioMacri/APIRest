@@ -30,7 +30,7 @@ app.get('/search/categories', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
 
-        conn.query('SELECT DISTINCT category, subCategory FROM `e-commerce`.products;', (err, rows)=>{
+        conn.query('SELECT DISTINCT category, subCategory FROM u284866064_coopedatabase.products;', (err, rows)=>{
             if(err) return res.send(err)
 
             res.json(rows)
