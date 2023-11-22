@@ -3,7 +3,7 @@ const express = require("express");
 const routes = express.Router();
 
 
-routes.get('/', (req, res)=>{
+/*routes.get('/', (req, res)=>{
     req.getConnection((err, conn)=>{
         if(err) return res.send(err)
 
@@ -47,5 +47,25 @@ routes.get('/api/:category', (req, res)=>{
         })
     })
 })
+
+const PaymentController = require("./controllers/paymentControllers");
+const PaymentService = require("./services/paymentService");
+
+const PaymentInstance = new PaymentController(new PaymentService());
+
+routes.get("/", function (req, res, next) {
+  return res.json({
+    "/payment": "generates a payment link",
+    "/subscription": "generates a subscription link"
+  });
+});
+
+routes.get("/payment", function (req, res, next) {
+  PaymentInstance.getPaymentLink(req, res);
+});
+
+routes.get("/subscription", function (req, res, next) {
+  PaymentInstance.getSubscriptionLink(req, res);
+});
 
 module.exports = routes;

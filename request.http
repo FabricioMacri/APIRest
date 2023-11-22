@@ -1,11 +1,14 @@
 ###
-GET http://localhost:9000/api/tecnología HTTP/1.1
+GET http://192.168.0.15:9000/api/tecnología HTTP/1.1
 
 ###
 GET http://localhost:9000/search/categories HTTP/1.1
 
 ###
 GET http://localhost:9000/item/1 HTTP/1.1
+
+###
+GET http://localhost:9000/payment HTTP/1.1
 
 POST url HTTP/1.1
 

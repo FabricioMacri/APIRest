@@ -2,10 +2,22 @@ const express = require("express");
 const mysql = require("mysql");
 const myconn = require("express-myconnection");
 const cors = require('cors');
-
+const path = require("path");
+const cookieParser = require("cookie-parser");
 const routes = require("./routes");
+const logger = require("morgan");
+const dotenv = require("dotenv");
 
 const app = express();
+dotenv.config();
+
+app.use(logger("dev"));
+app.use(express.json())
+app.use(cors())
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
 app.set('port', process.env.PORT || 9000);
 const dbOptions = {
     host : "192.168.0.15",
@@ -14,6 +26,7 @@ const dbOptions = {
     password : "Elmaster0192837465",
     database : "e-commerce"
 }
+app.use(myconn(mysql, dbOptions, 'single'))
 /*let conexion = mysql.createConnection({
 
     host : "srv1073.hstgr.io",
@@ -23,14 +36,11 @@ const dbOptions = {
     database : "u284866064_coopedatabase"
 })*/
 
-app.use(myconn(mysql, dbOptions, 'single'))
-app.use(express.json())
-app.use(cors())
-
 // routes -------------------------------------------
 app.get('/prueba', (req, res)=>{
     res.send('Welcome to my API')
 })
+app.use('/', routes);
 app.use('/items', routes)
 //app.use('/search/categories', routes)
 app.get('/search/categories', (req, res)=>{
@@ -51,6 +61,8 @@ app.get('/api/:category', routes)
 app.listen(app.get('port'), ()=>{
     console.log('server running on port', app.get('port'))
 })
+
+module.exports = app;
 /*
 conexion.connect(function(error){
 
