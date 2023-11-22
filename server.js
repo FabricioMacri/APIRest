@@ -11,6 +11,8 @@ const dotenv = require("dotenv");
 const app = express();
 dotenv.config();
 
+//Public Key: TEST-6fafd896-d448-40fe-947e-a63312ae1276
+
 app.use(logger("dev"));
 app.use(express.json())
 app.use(cors())
@@ -41,7 +43,17 @@ app.get('/prueba', (req, res)=>{
     res.send('Welcome to my API')
 })
 app.use('/', routes);
-app.use('/items', routes)
+app.get('/items', (req, res)=>{
+    req.getConnection((err, conn)=>{
+        if(err) return res.send(err)
+
+        conn.query('SELECT * FROM `e-commerce`.products', (err, rows)=>{
+            if(err) return res.send(err)
+
+            res.json(rows)
+        })
+    })
+})
 //app.use('/search/categories', routes)
 app.get('/search/categories', (req, res)=>{
     req.getConnection((err, conn)=>{

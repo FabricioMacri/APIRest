@@ -60,12 +60,15 @@ routes.get("/", function (req, res, next) {
   });
 });
 
-routes.get("/payment", function (req, res, next) {
+routes.post("/payment", function (req, res, next) {
   PaymentInstance.getPaymentLink(req, res);
 });
+
 
 routes.get("/subscription", function (req, res, next) {
   PaymentInstance.getSubscriptionLink(req, res);
 });
+
+
 
 module.exports = routes;
