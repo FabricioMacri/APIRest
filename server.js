@@ -21,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.set('port', process.env.PORT || 9000);
+/*
 const dbOptions = {
     host : "192.168.0.15",
     port : 3306,
@@ -28,43 +29,66 @@ const dbOptions = {
     password : "Elmaster0192837465",
     database : "e-commerce"
 }
-app.use(myconn(mysql, dbOptions, 'single'))
-/*let conexion = mysql.createConnection({
-
-    host : "srv1073.hstgr.io",
-    port : 3306,
-    user : "u284866064_admin",
-    password : "Elmaster0192837465",
-    database : "u284866064_coopedatabase"
-})*/
-
+*/
 // routes -------------------------------------------
 app.get('/prueba', (req, res)=>{
     res.send('Welcome to my API')
 })
 app.use('/', routes);
 app.get('/items', (req, res)=>{
-    req.getConnection((err, conn)=>{
-        if(err) return res.send(err)
+    const conexion = mysql.createConnection({
 
-        conn.query('SELECT * FROM `e-commerce`.products', (err, rows)=>{
-            if(err) return res.send(err)
+    host : "srv1073.hstgr.io",
+    port : 3306,
+    user : "u284866064_admin",
+    password : "Elmaster0192837465",
+    database : "u284866064_coopedatabase"
 
-            res.json(rows)
-        })
-    })
+  });
+    
+    conexion.query('SELECT * FROM products', (err, data) => {
+        if (err) {
+          console.error('Error al realizar la consulta:', err);
+          throw err;
+        }
+        conexion.end((err) => {
+          if (err) {
+            console.error('Error al cerrar la conexión a la base de datos:', err);
+            throw err;
+          }
+          console.log('Conexión a la base de datos cerrada');
+        });
+        res.json(data);
+        console.log("Se hizo una consulta.");
+      });
 })
 //app.use('/search/categories', routes)
 app.get('/search/categories', (req, res)=>{
-    req.getConnection((err, conn)=>{
-        if(err) return res.send(err)
+    const conexion = mysql.createConnection({
 
-        conn.query('SELECT DISTINCT category, subCategory FROM `e-commerce`.products;', (err, rows)=>{
-            if(err) return res.send(err)
-
-            res.json(rows)
-        })
-    })
+        host : "srv1073.hstgr.io",
+        port : 3306,
+        user : "u284866064_admin",
+        password : "Elmaster0192837465",
+        database : "u284866064_coopedatabase"
+    
+      });
+        
+        conexion.query('SELECT DISTINCT category, subCategory FROM products;', (err, data) => {
+            if (err) {
+              console.error('Error al realizar la consulta:', err);
+              throw err;
+            }
+            conexion.end((err) => {
+              if (err) {
+                console.error('Error al cerrar la conexión a la base de datos:', err);
+                throw err;
+              }
+              console.log('Conexión a la base de datos cerrada');
+            });
+            res.json(data);
+            console.log("Se hizo una consulta.");
+          });
 }) 
 app.get('/item/:id', routes)
 app.get('/api/:category', routes)
@@ -75,28 +99,4 @@ app.listen(app.get('port'), ()=>{
 })
 
 module.exports = app;
-/*
-conexion.connect(function(error){
 
-    if(error){ 
-        
-        throw error;
-    }
-    else console.log("Conexion exitosa");
-})
-setInterval(() => {
-    
-    conexionViva();
-    
-}, 2000)
-
-function conexionViva(){
-    
-    conexion.query('SELECT * FROM u284866064_coopedatabase.products WHERE ID = 1', function(error){
-
-        if(error) {throw error;}
-        else console.log("Conexion con el servidor activa.")
-    })
-
-    return;
-}*/
