@@ -41,7 +41,7 @@ app.get('/items', (req, res)=>{
     host : "srv1073.hstgr.io",
     port : 3306,
     user : "u284866064_admin",
-    password : "Elmaster0192837465",
+    password : "Cope44320322",
     database : "u284866064_coopedatabase"
 
   });
